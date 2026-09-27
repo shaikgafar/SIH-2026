@@ -1,0 +1,14 @@
+node_modules
+frontend/node_modules
+frontend/dist
+.git
+.gitignore
+.vscode
+.idea
+__pycache__
+*.pyc
+*.pyo
+lunar_align/backend/venv
+venv
+.pytest_cache
+*.log

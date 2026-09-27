@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  lunaalign:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: lunaalign:latest
+    container_name: lunaalign_app
+    ports:
+      - "8001:8001"
+    environment:
+      - PORT=8001
+      - PROJECT_NAME=LunaAlign
+    restart: unless-stopped
