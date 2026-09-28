@@ -1,0 +1,7 @@
+{
+  "name": "lunaalign-sih26166",
+  "private": true,
+  "scripts": {
+    "build": "npm --prefix frontend run build"
+  }
+}
