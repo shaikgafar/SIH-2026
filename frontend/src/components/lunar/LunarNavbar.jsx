@@ -32,13 +32,15 @@ export default function LunarNavbar({ activeTab, setActiveTab, onResetDemo, meth
         {/* Brand */}
         <div style={{ display: "flex", alignItems: "center", gap: "0.65rem" }}>
           <div style={{
-            background: "var(--accent)",
-            padding: "0.4rem",
-            borderRadius: "var(--radius-sm)",
+            width: 32,
+            height: 32,
+            borderRadius: "50%",
             display: "flex",
             alignItems: "center",
+            justifyContent: "center",
+            filter: "drop-shadow(0 0 8px rgba(56, 189, 248, 0.45))",
           }}>
-            <Satellite size={18} color="#fff" />
+            <img src="/favicon.svg" alt="Moon Logo" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
           </div>
           <div>
             <span style={{ fontWeight: 800, fontSize: "1rem", color: "var(--text)" }}>

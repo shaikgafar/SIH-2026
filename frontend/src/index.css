@@ -326,3 +326,210 @@ body {
   align-items: center;
   gap: 0.75rem;
 }
+
+/* ══════════════════════════════════════════
+   SIMPLIFIED WORKFLOW TABS & STEPPER
+══════════════════════════════════════════ */
+.step-nav-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #070e1a;
+  padding: 0.3rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+
+.step-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.step-nav-btn:hover {
+  color: #ffffff;
+  background: rgba(56, 189, 248, 0.08);
+}
+
+.step-nav-btn.active {
+  background: var(--accent-blue);
+  color: #ffffff;
+  box-shadow: 0 0 12px rgba(0, 119, 255, 0.4);
+}
+
+.step-nav-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  font-size: 0.65rem;
+  font-weight: 800;
+}
+
+/* ══════════════════════════════════════════
+   PRESET SCENARIO CHIPS
+══════════════════════════════════════════ */
+.preset-chips-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+}
+
+.preset-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.75rem;
+  background: #091222;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  font-size: 0.73rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.preset-chip:hover {
+  border-color: var(--accent);
+  color: #ffffff;
+  background: #0f1c34;
+}
+
+.preset-chip.active {
+  background: rgba(56, 189, 248, 0.15);
+  border-color: var(--accent);
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* ══════════════════════════════════════════
+   HERO KPI CARDS
+══════════════════════════════════════════ */
+.hero-kpi-card {
+  background: linear-gradient(145deg, #0a1324 0%, #060b14 100%);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.hero-kpi-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.hero-kpi-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-blue));
+}
+
+.hero-kpi-val {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+}
+
+/* ══════════════════════════════════════════
+   ARCHIVE DROPDOWN MENU
+══════════════════════════════════════════ */
+.dropdown-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 0.4rem;
+  background: #0a1424;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  padding: 0.4rem;
+  min-width: 220px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  animation: fadeIn 0.15s ease-out;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-sm);
+  color: var(--text-main);
+  text-decoration: none;
+  font-size: 0.74rem;
+  font-weight: 500;
+  transition: background 0.15s ease;
+}
+
+.dropdown-item:hover {
+  background: rgba(56, 189, 248, 0.12);
+  color: var(--accent);
+}
+
+/* ══════════════════════════════════════════
+   COLLAPSIBLE ACCORDION
+══════════════════════════════════════════ */
+.accordion-header {
+  background: #070e1c;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.accordion-header:hover {
+  border-color: rgba(56, 189, 248, 0.3);
+  background: #0a1428;
+}
+
+.accordion-body {
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 var(--radius) var(--radius);
+  padding: 1rem;
+  background: #050a14;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
