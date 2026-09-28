@@ -16,6 +16,7 @@ from app.models.schemas import MatchResponse, TiePoint, Point2D, RegistrationMet
 class LunarCorrespondencePipeline:
     def __init__(self):
         self.prebuilt_datasets = get_prebuilt_lunar_datasets()
+        self._cache = {}
 
     def get_available_datasets(self) -> Dict[str, Any]:
         return self.prebuilt_datasets
@@ -29,9 +30,14 @@ class LunarCorrespondencePipeline:
         custom_img1: Optional[np.ndarray] = None,
         custom_img2: Optional[np.ndarray] = None
     ) -> MatchResponse:
+        is_custom = custom_img1 is not None and custom_img2 is not None
+        cache_key = f"{dataset_id}_{method}_{ransac_thresh}_{enable_subpixel}"
+        if not is_custom and cache_key in self._cache:
+            return self._cache[cache_key]
+
         t0 = time.time()
 
-        if custom_img1 is not None and custom_img2 is not None:
+        if is_custom:
             img1 = custom_img1
             img2 = custom_img2
             dataset_meta = {
@@ -155,7 +161,7 @@ class LunarCorrespondencePipeline:
                 )
             )
 
-        return MatchResponse(
+        res = MatchResponse(
             dataset_id=dataset_id,
             method_used=method,
             tie_points=tie_points_list,
@@ -171,6 +177,11 @@ class LunarCorrespondencePipeline:
             phase_map1_base64=ndarray_to_base64_png(pc1) if pc1 is not None else None,
             phase_map2_base64=ndarray_to_base64_png(pc2) if pc2 is not None else None
         )
+
+        if not is_custom:
+            self._cache[cache_key] = res
+
+        return res
 
     def run_benchmark_suite(self, dataset_id: str = "dataset_scale_ohrc_tmc2") -> List[BenchmarkRow]:
         """

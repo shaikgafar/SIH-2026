@@ -1,27 +1,48 @@
-const API_BASE = import.meta.env.VITE_API_BASE || (
+const rawBase = import.meta.env.VITE_API_BASE || (
   typeof window !== "undefined" && window.location.port === "5173"
     ? "http://localhost:8001/api"
     : "/api"
 );
 
+// Strip trailing slashes
+const cleanBase = rawBase.replace(/\/+$/, "");
+
+// Ensure API_BASE points to /api, while API_BASE_FALLBACK points to root
+export const API_BASE = cleanBase.endsWith("/api") ? cleanBase : `${cleanBase}/api`;
+export const API_BASE_FALLBACK = cleanBase.endsWith("/api") ? cleanBase.slice(0, -4) : cleanBase;
+
 export async function fetchLunarDatasets() {
-  const res = await fetch(`${API_BASE}/datasets`);
-  if (!res.ok) throw new Error("Failed to fetch lunar datasets");
+  let res = await fetch(`${API_BASE}/datasets`).catch(() => null);
+  if (!res || !res.ok) {
+    res = await fetch(`${API_BASE_FALLBACK}/datasets`).catch(() => null);
+  }
+  if (!res || !res.ok) throw new Error("Failed to fetch lunar datasets");
   return res.json();
 }
 
 export async function matchLunarImages(datasetId, method = "HYBRID_PHASE_CONGRUENCY", ransacThresh = 3.0, enableSubpixel = true) {
-  const res = await fetch(`${API_BASE}/match`, {
+  const payload = JSON.stringify({
+    dataset_id: datasetId,
+    method: method,
+    ransac_thresh: ransacThresh,
+    enable_subpixel: enableSubpixel
+  });
+
+  let res = await fetch(`${API_BASE}/match`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      dataset_id: datasetId,
-      method: method,
-      ransac_thresh: ransacThresh,
-      enable_subpixel: enableSubpixel
-    }),
-  });
-  if (!res.ok) throw new Error("Image correspondence matching failed");
+    body: payload
+  }).catch(() => null);
+
+  if (!res || !res.ok) {
+    res = await fetch(`${API_BASE_FALLBACK}/match`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: payload
+    }).catch(() => null);
+  }
+
+  if (!res || !res.ok) throw new Error("Image correspondence matching failed");
   return res.json();
 }
 

@@ -19,11 +19,18 @@ app.add_middleware(
 )
 
 app.include_router(api_router, prefix=settings.API_V1_STR)
+app.include_router(api_router, prefix="")
 
 @app.on_event("startup")
 def startup_event():
     print(f"[INFO] Initializing {settings.PROJECT_NAME}...")
     _ = pipeline.get_available_datasets()
+    # Pre-warm primary datasets into memory so UI renders instantly
+    try:
+        pipeline.run_correspondence("dataset_scale_ohrc_tmc2")
+        pipeline.run_correspondence("dataset_sun_angle_crater")
+    except Exception as e:
+        print(f"[WARN] Pre-warm note: {e}")
     print("[INFO] Chandrayaan-2 & LRO reference datasets ready!")
 
 # Production static files mount for Vite frontend
